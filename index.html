@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Socket.IO chat</title>
+    <style>
+      body {
+        background:#282C34;
+        margin: 0;
+        padding-bottom: 3rem;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif;
+      }
+
+      #form {
+        background: rgba(0, 0, 0, 0.15);
+        padding: 0.25rem;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        height: 3rem;
+        box-sizing: border-box;
+        backdrop-filter: blur(10px);
+      }
+      #input {
+        border: none;
+        padding: 0 1rem;
+        flex-grow: 1;
+        border-radius: 2rem;
+        margin: 0.25rem;
+      }
+      #input:focus {
+        outline: none;
+      }
+      #form > button {
+        background: #333;
+        border: none;
+        padding: 0 1rem;
+        margin: 0.25rem;
+        border-radius: 3px;
+        outline: none;
+        color: #fff;
+      }
+
+      #messages {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+      }
+      #messages > li {
+        padding: 0.5rem 1rem;
+      }
+      #messages > li:nth-child(odd) {
+        background: #efefef;
+      }
+      #messages > li:nth-child(even) {
+        background: #3f4450;
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <ul id="messages"></ul>
+    <form id="form" action="">
+      <input id="input" autocomplete="off" autofocus><button class="send">Send</button>
+      <input id="channel" autocomplete="off" /><button class="join">
+        Join
+      </button>
+    </form>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+      var socket = io("http://localhost:3000");
+      var id = "";
+      socket.on("connect", () => {
+        id = socket.id;
+        let msg = `You connected with id: ${id}`;
+        sendMessage(msg);
+        history.pushState(
+          "data to be passed",
+          `Chat with ${id}`,
+          `/chat/${id}`
+        );
+      });
+      var messages = document.getElementById("messages");
+      var form = document.getElementById("form");
+      var input = document.getElementById("input");
+      var channel = document.getElementById("channel");
+      var send = document.querySelector(".send");
+      var join = document.querySelector(".join");
+      var room = "";
+      var isjoined = false;
+      send.addEventListener("click", function (e) {
+        e.preventDefault();
+        let msg = input.value;
+        let room = channel.value;
+        if (msg && room !== id) {
+          if (room) {
+            history.pushState(
+              "data to be passed",
+              `Chat with ${id}`,
+              `/chat/${id}`
+            );
+            // sendMessage(`Connected the room: ${room}`);
+            socket.emit("send-message", msg, room, id);
+            sendMessage(msg, room);
+          }
+          else{
+            socket.emit("send-message", msg, room, id);
+            sendMessage(msg)
+          }
+          input.value = "";
+        }
+      });
+
+      socket.on("receive-message", function (msg, room, senderid) {
+        console.log(`receive-message`, msg);
+        receiverid = socket.id;
+        if (msg) {
+          receiveMessage(msg,senderid);
+        }
+        if (!isjoined) {
+          isjoined = true;
+          history.pushState(
+            "data to be passed",
+            `Chat with ${receiverid}`,
+            `/chat/${receiverid}_${room}`
+          );
+        }
+      });
+
+      socket.on("joined-to-channel", function (room) {
+        id = socket.id;
+        history.pushState(
+          "data to be passed",
+          `Chat with ${id}`,
+          `/chat/${id}_${room}`
+        );
+      });
+
+      join.addEventListener("click", function (e) {
+        e.preventDefault();
+      });
+      function sendMessage(msg,senderid) {
+        console.info(msg,senderid)
+        var item = document.createElement("li");
+        item.innerHTML = `${msg}`;
+        if(senderid){
+          if(senderid == socket.id) {
+            item.innerHTML = `<kbd>${senderid}</kbd>: ${msg}`;
+          }else{
+            item.innerHTML = `to <kbd>${senderid}</kbd>: ${msg}`;
+          }
+          item.setAttribute("data-id", senderid);
+          item.addEventListener("click", (data)=>{
+             copyToClipboard(item.getAttribute("data-id"));
+          })
+        }
+        messages.appendChild(item);
+        window.scrollTo(0, document.body.scrollHeight);
+      };
+      function receiveMessage(msg,id) {
+        console.info(msg,id)
+        var item = document.createElement("li");
+        item.innerHTML = `${msg}`;
+        if(id){
+          if(id == socket.id) {
+            item.innerHTML = `${id}: ${msg}`;
+          }else{
+            item.innerHTML = `from ${id}: ${msg}`;
+          }
+          item.setAttribute("data-id", id);
+          item.addEventListener("click", (data)=>{
+             copyToClipboard(item.getAttribute("data-id"));
+          })
+
+        }
+        messages.appendChild(item);
+        window.scrollTo(0, document.body.scrollHeight);
+      };
+
+      function copyToClipboard(data){
+        const temp = document.body.appendChild(document.createElement('textarea'));
+        temp.value = data.trim();
+        temp.select();  
+        document.execCommand("copy");
+        let msg = "Id is copied. Paste to the area and start chatting";
+        channel.value = data.trim();
+        sendMessage(msg)
+        input.select();
+        temp.remove();
+      }
+    </script>
+  </body>
+</html>

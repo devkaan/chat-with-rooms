@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/popup.css" />
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Game</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Hosgeldin <%= (locals.username)? username : null %>!</h1>
+        <h2>Kisi sayisi sec</h2>
+        <form action="" onsubmit="return false" id="matchForm">
+            <div class="personMode">
+                <h6>Cok oyunculu henuz hazir degil.</h6>
+                <label for="mode2">
+                    <input required type="radio" name="personMode" value="mode2" disabled id="mode2"> 2 Kisilik
+                </label>
+                <label for="mode3">
+                    <input required type="radio" name="personMode" value="mode3" disabled id="mode3"> 3 Kisilik
+                </label>
+                <label for="mode4">
+                    <input required type="radio" name="personMode" value="mode4" disabled id="mode4"> 4 Kisilik
+                </label>
+                <label for="againstComputer">
+                    <input required type="radio" name="personMode" value="againstComputer" id="againstComputer" checked>
+                    Bilgisayara karsi
+                </label>
+            </div>
+            <br>
+            <div class="gameModes">
+                <h2>Oyun modunu sec</h2>
+                <label for="digitmode2">
+                    <input required type="radio" name="gameMode" value="digitmode2" id="digitmode2"> 2 Haneli
+                </label>
+                <label for="digitmode3">
+                    <input required type="radio" checked name="gameMode" value="digitmode3" id="digitmode3"> 3 Haneli
+                </label>
+                <label for="digitmode4">
+                    <input required type="radio" name="gameMode" value="digitmode4" id="digitmode4"> 4 Haneli
+                </label>
+            </div>
+        </form>
+        <div class="start-container">
+            <input id="start" value="Oyuna Basla" type="button">
+            <div id="time">
+                <span class="minute">00</span>:<span class="second">00</span>
+            </div>
+        </div>
+    </div>
+    <%- include('inc/popup.ejs') %>
+
+        <%- include('inc/onlineUsers.ejs') %>
+
+            <script src="/js/jquery.min.js"></script>
+            <script src="/js/popup.js"></script>
+
+            <script src="/socket.io/socket.io.js"></script>
+            <script>
+                const socket = io("http://localhost:3000/");
+            </script>
+
+            <script>
+                socket.on("connect", () => {
+                    id = socket.id;
+                    let msg = `You connected with id: ${id}`;
+                    console.log(msg);
+                });
+            </script>
+            <script src="/js/popup.js"></script>
+            <script src="/js/matchmaking.js"></script>
+            <script>
+            </script>
+</body>
+
+</html>

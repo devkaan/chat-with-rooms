@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+    <title>Sign up</title>
+    <style>
+      html,
+      body {
+        height: 100%;
+      }
+
+      body {
+        display: flex;
+        align-items: center;
+      }
+
+      .container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+      .container > * {
+        margin-bottom: 10px;
+      }
+    </style>
+    <link rel="stylesheet" href="/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/popup.css" />
+    <link rel="stylesheet" href="/css/login.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="wrapper">
+        <form id="signupform" class="form-signin" onsubmit="return false">
+          <h2 class="form-signin-heading">Register to ISIM</h2>
+          <div class="alts"></div>
+          <input
+            type="text"
+            class="form-control"
+            name="username"
+            placeholder="Enter Username"
+            autocomplete="username"
+            required=""
+            autofocus=""
+          />
+          <input
+            type="password"
+            class="form-control"
+            name="userpass"
+            placeholder="Enter Password"
+            required=""
+          />
+          <input
+            type="mail"
+            class="form-control"
+            name="email"
+            placeholder="Enter Mail"
+            required=""
+          />
+          <input
+            type="text"
+            class="form-control"
+            name="fullname"
+            placeholder="Enter Fullname"
+            required=""
+          />
+          <!-- <label class="checkbox">
+                <input
+                  type="checkbox"
+                  value="remember-me"
+                  id="rememberMe"
+                  name="rememberMe"
+                />
+                Remember me
+              </label> -->
+          <button style="margin-top: 10px"
+            class="btn btn-lg btn-primary btn-block"
+            type="submit"
+            id="signupbtn"
+          >
+            Signup
+          </button>
+          <div style="margin-top: 10px">
+            Do you have an account?
+            <a href="/login" class="pe-auto text-primary"> Login </a>
+          </div>
+        </form>
+      </div>
+    </div>
+    
+    <%- include('inc/popup.ejs') %>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/popup.js"></script>
+    <script src="/js/fontawesome.js"></script>
+    <script src="/js/loginevents.js"></script>
+  </body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/popup.css" />
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Game</title>
+</head>
+
+<body>
+    <div class="container">
+        <% 
+            var gameModeMessages = [
+                'Bilgisayara karsi oynuyorsun!',
+                'Bilgisayara karsi bir tahminde bulun!',
+                'Simdi bilgisayar tahminde bulunacak!'
+            ];
+        %>
+        <h3><%= (locals.onlyAgainstComputer)? gameModeMessages[0] : null %></h3>
+        <p><%= data.matchInfo  %> <br>
+        </p>
+            <% if(locals.data) { %>
+                <h4>Hosgeldin <%= data.username %> </h4>
+                <form action="" onsubmit="return false" class="inputs">
+                    <% x = data.matchInfo.gameMode.replace("digitmode","");
+                    x = Number(x); 
+                    for(var i=0; i < x; i++) { %>
+                        <input type="text" <%= (i==0)? 'autofocus' : '' %>  class="input" maxlength="1">
+                        <% } %>
+                        <input type="button" class="guess" value="Tahmin et">       
+                        <input type="text" style="display: none;" value="<%= (locals.data.matchInfo.matchid)? data.matchInfo.matchid : null %>"  class="input" maxlength="1">
+                </form>
+                <h5 id="alert"></h5>
+                <h5 id="info"></h5>
+            <% } %>
+        </p>
+        
+    </div>
+
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/game_client.js"></script>
+    <script src="/js/popup.js"></script>
+    <script src="/js/matchmaking.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        
+        socket.on("connect", () => {
+            id = socket.id;
+            let msg = `You connected with id: ${id}`;
+            console.log(msg);
+        });
+        window.addEventListener('beforeunload', function (e) {
+            e.preventDefault();
+        });
+        socket.on('disconnect', ()=>{
+
+            socket.emit('guess', "guessWhat")
+        })
+        socket.on('pcguess', (guess)=>{
+
+        })
+    </script>
+    <%- include('inc/popup.ejs') %>
+    <%- include('inc/onlineUsers.ejs') %>
+</body>
+
+</html>

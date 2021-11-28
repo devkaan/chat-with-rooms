@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="data:," />
+    <meta
+      name="google-site-verification"
+      content="KiRRxA551B0Uj9qczyJk5lMrc8oBy81gxr_elklHGb8"
+    />
+    <link rel="stylesheet" href="/bootstrap/bootstrap.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/popup.css" />
+
+    <style>
+      input,
+      textarea {
+        padding: 5px 8px;
+        margin-bottom: 10px;
+        margin-top: 5px;
+      }
+    </style>
+    <title>Admin Panel</title>
+  </head>
+
+  <body>
+    <div class="cont">
+      <%- include('../inc/site_version.ejs') %>
+      <div class="header">
+        <div class="headercont">
+          <div class="logo"><%- include('../inc/logo.ejs') %></div>
+          <div class="right"><%- include('../inc/header_right.ejs') %></div>
+        </div>
+      </div>
+      <div class="center">
+        <div class="centercont">
+          <div class="posts admin-posts" style="align-items: center">
+            <h3>ADMIN | Send notification</h3>
+            <span>
+              <!-- <a href="/admin/reports">reports</a> -->
+              <!-- <a href="/admin/bans">bans</a> -->
+              <!-- <a href="/admin/suspends">suspends</a> -->
+              <a href="/admin/sendnotif" class="selected">send notif</a>
+              <a href="/admin/posts">posts</a>
+              <a href="/admin/users">users</a>
+              <a href="/admin/maintenance">maintenance</a>
+              <a href="/admin/backup">download backup</a>
+            </span>
+          </div>
+          <div style="padding: 0px 20px">
+            <form
+              id="sendnotifform"
+              class="form-signin"
+              onsubmit="return false"
+              style="
+                display: flex;
+                flex-direction: column;
+                justify-content: start;
+              "
+            >
+              <br />
+              <div>
+                Just specified users (optional) (format: 1001,1002,1003 OR just
+                one userid)
+              </div>
+              <input type="text" name="userids" />
+              <div>Notif Type (required)</div>
+              <input type="text" name="notiftype" required />
+              <div>Notif Content (required)</div>
+              <textarea type="text" name="notifcontent" required></textarea>
+              <br />
+              <button
+                class="btn btn-lg btn-primary btn-block"
+                type="submit"
+                id="sendnotifbtn"
+              >
+                Send notification
+              </button>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <%- include('../inc/popup.ejs') %>
+    <i
+      onclick="topFunction()"
+      id="gotopbtn"
+      title="Go to top"
+      class="fas fa-arrow-up"
+    ></i>
+
+    <script src="/js/jquery.min.js"></script>
+
+    <script src="/js/lazysizes.min.js" async></script>
+    <script src="/js/theme.min.js"></script>
+    <script src="/js/fontawesome.js"></script>
+    <script src="/js/popup.js"></script>
+    <script src="/js/utm_source.js"></script>
+    <script src="/js/admin/main.js?ver=0.0"></script>
+  </body>
+</html>

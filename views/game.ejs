@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/popup.css" />
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Game</title>
+</head>
+
+<body>
+    <div class="container">
+        <% 
+            var gameModeMessages = [
+                'Bilgisayara karsi oynuyorsun!',
+                'Bilgisayara karsi bir tahminde bulun!',
+                'Simdi bilgisayar tahminde bulunacak!'
+            ];
+        %>
+        <h3><%= (locals.onlyAgainstComputer)? gameModeMessages[0] : null %></h3>
+        <h5 style="color: red;" class="alert"></h5>
+        <input type="text" autofocus class="input" maxlength="<%=(locals.gameMode) ? gameMode : ''%>">
+        <input type="button" class="guess" value="Tahmin et">
+        <input type="text" class="matchid" value="<%=(locals.matchid) ? matchid : ''%>">
+    </div>
+    <%- include('inc/popup.ejs') %>
+
+        <script src="/js/jquery.min.js"></script>
+        <script src="/js/game_client.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+            const socket = io("http://localhost:3000/");
+        </script>
+
+        <script>
+            socket.on("connect", () => {
+                id = socket.id;
+                let msg = `You connected with id: ${id}`;
+                console.log(msg);
+                // sendMessage(msg);
+                // history.pushState(
+                //   "data to be passed",
+                //   `Chat with ${id}`,
+                //   `/chat/${id}`
+                // );
+            });
+        </script>
+        <script src="/js/popup.js"></script>
+        <script src="/js/matchmaking.js"></script>
+</body>
+
+</html>

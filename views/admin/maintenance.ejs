@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="data:," />
+    <meta
+      name="google-site-verification"
+      content="KiRRxA551B0Uj9qczyJk5lMrc8oBy81gxr_elklHGb8"
+    />
+    <link rel="stylesheet" href="/bootstrap/bootstrap.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/popup.css" />
+
+    <title>Maintenance</title>
+  </head>
+
+  <body>
+    <div class="cont">
+      <%- include('../inc/site_version.ejs') %>
+      <div class="header">
+        <div class="headercont">
+          <div class="logo"><%- include('../inc/logo.ejs') %></div>
+          <div class="search">
+            <input
+              type="text"
+              name="search"
+              id="search"
+              placeholder="Write something"
+            />
+            <span class="searchbtn">
+              <i class="fas fa-search"></i>
+            </span>
+            <div class="results-container">
+              <img
+                class="lazyload searchloading"
+                data-src="/img/bird.gif"
+                alt="search loading gif"
+              />
+              <div class="results"></div>
+            </div>
+          </div>
+          <div class="right"><%- include('../inc/header_right.ejs') %></div>
+        </div>
+      </div>
+      <div class="center">
+        <div class="centercont">
+          <div class="posts admin-posts" style="align-items: center">
+            <h3>ADMIN | Maintenance</h3>
+            <div class="form-check form-switch">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="maintenance"
+              />
+              <label class="form-check-label" for="maintenance"
+                >Maintenance Status: false (check with database)</label
+              >
+            </div>
+            <span>
+              <!-- <a href="/admin/reports">reports</a> -->
+              <!-- <a href="/admin/bans">bans</a> -->
+              <!-- <a href="/admin/suspends">suspends</a> -->
+              <a href="/admin/sendnotif">send notif</a>
+              <a href="/admin/posts">posts</a>
+              <a href="/admin/users">users</a>
+              <a href="/admin/maintenance" class="selected">maintenance</a>
+              <a href="/admin/backup">download backup</a>
+            </span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <%- include('../inc/popup.ejs') %>
+    <i
+      onclick="topFunction()"
+      id="gotopbtn"
+      title="Go to top"
+      class="fas fa-arrow-up"
+    ></i>
+
+    <script src="/js/jquery.min.js"></script>
+
+    <script src="/js/lazysizes.min.js" async></script>
+    <script src="/js/theme.min.js"></script>
+    <script src="/js/fontawesome.js"></script>
+    <script src="/js/popup.js"></script>
+    <script src="/js/utm_source.js"></script>
+
+    <script src="/js/admin/main.js?ver=0.0.1"></script>
+  </body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta
+      name="google-site-verification"
+      content="KiRRxA551B0Uj9qczyJk5lMrc8oBy81gxr_elklHGb8"
+    />
+    <!-- <link rel="stylesheet" href="/css/style.css"> -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="data:,">
+    <title>Login</title>
+    <style>
+      html,
+      body {
+        height: 100%;
+      }
+
+      body {
+        display: flex;
+        align-items: center;
+      }
+
+      .container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+      .container > * {
+        margin-bottom: 10px;
+      }
+    </style>
+    <link rel="stylesheet" href="/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/login.css" />
+    <link rel="stylesheet" href="/css/popup.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="wrapper">
+        <form id="loginform" class="form-signin" onsubmit="return false">
+          <h2 class="form-signin-heading">Welcome to Admin Page</h2>
+          <input
+            type="text"
+            id="username"
+            class="form-control"
+            name="adminusername"
+            placeholder="Enter Username"
+            required=""
+            autofocus=""
+          />
+          <input
+            type="password"
+            id="userpass"
+            class="form-control"
+            name="adminuserpass"
+            placeholder="Enter Password"
+            required=""
+          />
+          <button
+            class="btn btn-lg btn-primary btn-block"
+            type="submit"
+            id="loginbtn"
+          >
+            Login
+          </button>
+        </form>
+      </div>
+    </div>
+    <%- include('../inc/popup.ejs') %>
+
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/fontawesome.js"></script>
+    <script src="/js/popup.js"></script>
+    <script src="/js/admin/adminlogin.js"></script>
+
+  </body>
+</html>
